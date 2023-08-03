@@ -1,4 +1,5 @@
 import logging
+import config
 import colorlog
 
 logger = logging.getLogger()
@@ -32,9 +33,7 @@ def setup_logging():
         ))
 
     logger.addHandler(handler)
-
-    for level in [logging.ERROR, logging.WARNING, logging.INFO, logging.DEBUG, logging.CRITICAL]:
-        filename = f"./logs/{level}.log"
-        file_handler = logging.FileHandler(filename)
-        file_handler.setFormatter(logging.Formatter(logformat, datefmt))
-        logger.addHandler(file_handler)
+    filename = f"{config.Dir}\\logs\\log.log"
+    file_handler = logging.FileHandler(filename)
+    file_handler.setFormatter(logging.Formatter(logformat, datefmt))
+    logger.addHandler(file_handler)

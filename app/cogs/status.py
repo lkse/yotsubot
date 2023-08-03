@@ -9,7 +9,7 @@ class Status(commands.Cog):
     def __init__(self, client):
         self.client = client
 
-    @discord.slash_command(description="Get the Kawata Server status")
+    @discord.slash_command(name="status", description="Get the Kawata Server status")
     async def status(self, ctx):
         async with ctx.typing():
             headers = {"Authorization": f"Bearer {config.Api_Key}"}
@@ -55,7 +55,7 @@ class Status(commands.Cog):
             embed.add_field(name=service_name, value=status_text, inline=True)
 
         embed.set_footer(text="yotsubot, by lkse",
-                         icon_url="https://cdn.discordapp.com/avatars/675506107480801291/4034e17d0aad277363ee56842c073e33.webp?size=80")
+                         icon_url=self.client.user.avatar.url)
 
         await ctx.respond(embed=embed)
 
