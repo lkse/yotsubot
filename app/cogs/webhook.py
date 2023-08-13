@@ -11,7 +11,7 @@ class QuartCog(commands.Cog):
     def __init__(self, client):
         self.client = client
 
-    @tasks.loop(minutes=15, reconnect=True)
+    @tasks.loop(minutes=5, reconnect=True)
     async def status(self):
         app.logging.logger.info("getting status")
         headers = {"Authorization": f"Bearer {config.Api_Key}"}
