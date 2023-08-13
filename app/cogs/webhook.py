@@ -20,6 +20,8 @@ class QuartCog(commands.Cog):
     async def cog_unload() -> None:
         if self.session is not None:
             await self.session.close()
+
+        self.status.stop()
     
     @tasks.loop(minutes=5, reconnect=True)
     async def status(self) -> None:
