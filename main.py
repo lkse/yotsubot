@@ -47,7 +47,6 @@ async def on_resume():
     Session Resumed.
     """)
 
-
 if __name__ == "__main__":
     app.logging.setup_logging()
     client.run(config.Token)
