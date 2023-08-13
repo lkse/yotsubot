@@ -26,14 +26,13 @@ class QuartCog(commands.Cog):
         app.logging.logger.info("getting status")
         headers = {"Authorization": f"Bearer {config.Api_Key}"}
         url = "https://api.hyperping.io/v1/monitors"
-        async with aiohttp.ClientSession() as session:
-            async with session.get(
-                    url,
-                    headers=headers,
-                    timeout=aiohttp.ClientTimeout(total=10),
-                    allow_redirects=True
-            ) as resp:
-                data = await resp.json()
+        async with self.session.get(
+            url,
+            headers=headers,
+            timeout=aiohttp.ClientTimeout(total=10),
+            allow_redirects=True
+        ) as resp:
+            data = await resp.json()
 
         service_names = ["pep.py", "API", "Hanayo"]
         statuses = {name: False for name in service_names}
