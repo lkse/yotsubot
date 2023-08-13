@@ -8,11 +8,21 @@ import aiohttp
 
 
 class QuartCog(commands.Cog):
-    def __init__(self, client):
+    def __init__(self, client: commands.Bot) -> None:
         self.client = client
 
+    async def cog_load() -> None:
+        self.session = aiohttp.ClientSession()
+        self.channel = self.client.get_channel(1100198629853110312)
+        self.message = await channel.fetch_message(1140107257095409664)
+        self.status.start()
+
+    async def cog_unload() -> None:
+        if self.session is not None:
+            await self.session.close()
+    
     @tasks.loop(minutes=5, reconnect=True)
-    async def status(self):
+    async def status(self) -> None:
         app.logging.logger.info("getting status")
         headers = {"Authorization": f"Bearer {config.Api_Key}"}
         url = "https://api.hyperping.io/v1/monitors"
@@ -58,16 +68,11 @@ class QuartCog(commands.Cog):
 
         embed.set_footer(text="yotsubot, by lkse", icon_url=self.client.user.avatar.url)
 
-        channel = self.client.get_channel(1100198629853110312)
-        if channel:
-            msg = await channel.fetch_message(1140107257095409664)
-            if msg:
-                await msg.edit(embed=embed)
-            else:
-                await channel.send(embed=embed)
+        if self.message is not None:
+            return await self.message.edit(embed=embed)
+
+        await self.channel.send(embed=embed)
 
 
-def setup(client):
-    cog = QuartCog(client)
-    client.add_cog(cog)
-    cog.status.start()
+def setup(client: commands.Bot) -> None:
+    client.add_cog(QuartCog(client))
