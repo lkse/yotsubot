@@ -43,26 +43,6 @@ class User(commands.Cog):
                              icon_url=f"{self.client.user.avatar.url}")
         await ctx.respond(embed=embed)
 
-    @discord.slash_command(name="addrole", description="Add a role to a user")
-    async def add_role(self, ctx, user: discord.Member, role: discord.Role):
-        try:
-            await user.add_roles(role)
-            await ctx.respond(f"Role {role.mention} added to user {user.display_name}.")
-        except discord.errors.Forbidden:
-            await ctx.respond(f"403 Forbidden. I don't have permissions to do that!")
-        except discord.HTTPException:
-            await ctx.respond(f"HTTP exception please wait a bit and try again.")
-
-    @discord.slash_command(name="removerole", description="Remove a role from a user")
-    async def remove_role(self, ctx, user: discord.Member, role: discord.Role):
-        try:
-            await user.remove_roles(role)
-            await ctx.respond(f"Role {role.mention} removed from user {user.display_name}.")
-        except discord.errors.Forbidden:
-            await ctx.respond(f"403 Forbidden. I don't have permissions to do that!")
-        except discord.HTTPException:
-            await ctx.respond(f"HTTP exception please wait a bit and try again.")
-
 
 def setup(client):
     client.add_cog(User(client))

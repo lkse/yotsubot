@@ -11,18 +11,13 @@ class QuartCog(commands.Cog):
     def __init__(self, client: commands.Bot) -> None:
         self.client = client
 
-    async def cog_load() -> None:
+    @commands.Cog.listener()
+    async def on_ready(self) -> None:
         self.session = aiohttp.ClientSession()
         self.channel = self.client.get_channel(1100198629853110312)
-        self.message = await channel.fetch_message(1140107257095409664)
+        self.message = await self.channel.fetch_message(1140358525990740018)
         self.status.start()
 
-    async def cog_unload() -> None:
-        if self.session is not None:
-            await self.session.close()
-
-        self.status.stop()
-    
     @tasks.loop(minutes=5, reconnect=True)
     async def status(self) -> None:
         app.logging.logger.info("getting status")
