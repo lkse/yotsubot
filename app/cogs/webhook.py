@@ -69,9 +69,10 @@ class QuartCog(commands.Cog):
         embed.set_footer(text="yotsubot, by lkse", icon_url=self.client.user.avatar.url)
 
         if self.message is not None:
-            return await self.message.edit(embed=embed)
+            await self.message.edit(embed=embed)
+            return
 
-        await self.channel.send(embed=embed)
+        self.message = await self.channel.send(embed=embed)
 
 
 def setup(client: commands.Bot) -> None:
