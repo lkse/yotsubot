@@ -3,7 +3,7 @@ from discord.ext import commands
 import app
 import config
 
-client = discord.ext.commands.Bot(intents=config.Intents)
+client = commands.Bot(intents=config.Intents)
 for cog in app.cogs:
     client.load_extension(f"app.cogs.{cog}")
 
